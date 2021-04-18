@@ -1,9 +1,5 @@
 package sl.savevaccinedataservice.bll;
 
-import sl.aboutteamservice.bll.blo.AboutTeamObject;
-import sl.aboutteamservice.dal.AboutTeamDataAccess;
-import sl.aboutteamservice.dal.AboutTeamDataAccessManager;
-import sl.aboutteamservice.dal.dao.AboutTeamDataAccessObject;
 import sl.savevaccinedataservice.bll.blo.SaveVaccineDataResultObject;
 import sl.savevaccinedataservice.dal.SaveVaccineDataDataAccess;
 import sl.savevaccinedataservice.dal.SaveVaccineDataDataAccessManager;
