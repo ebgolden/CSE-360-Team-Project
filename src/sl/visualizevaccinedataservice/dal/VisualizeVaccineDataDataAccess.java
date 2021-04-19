@@ -1,7 +1,7 @@
 package sl.visualizevaccinedataservice.dal;
 
 import dal.dao.VaccineRecordObject;
-import dal.dao.VaccineRecordTable;
+import dal.VaccineRecordTable;
 
 public class VisualizeVaccineDataDataAccess {
     private VaccineRecordTable vaccineRecordTable;

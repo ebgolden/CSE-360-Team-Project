@@ -1,7 +1,7 @@
 package sl.savevaccinedataservice.dal;
 
 import dal.dao.VaccineRecordObject;
-import dal.dao.VaccineRecordTable;
+import dal.VaccineRecordTable;
 
 public class SaveVaccineDataDataAccess {
     private VaccineRecordTable vaccineRecordTable;

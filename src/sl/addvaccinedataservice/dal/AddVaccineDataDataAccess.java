@@ -1,7 +1,7 @@
 package sl.addvaccinedataservice.dal;
 
 import dal.dao.VaccineRecordObject;
-import dal.dao.VaccineRecordTable;
+import dal.VaccineRecordTable;
 
 public class AddVaccineDataDataAccess {
     private static VaccineRecordTable vaccineRecordTable = new VaccineRecordTable();

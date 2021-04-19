@@ -1,7 +1,7 @@
 package sl.aboutteamservice.dal;
 
 import dal.dao.TeamMemberRecordObject;
-import dal.dao.TeamMemberTable;
+import dal.TeamMemberTable;
 
 public class AboutTeamDataAccess {
     private TeamMemberTable teamMemberTable;
