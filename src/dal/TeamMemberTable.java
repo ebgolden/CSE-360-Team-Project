@@ -6,7 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamMemberTable extends RecordTable<TeamMemberRecordObject> {
-    private static List<TeamMemberRecordObject> teamMemberTable = new ArrayList<>();
+    private static List<TeamMemberRecordObject> teamMemberTable = new ArrayList<TeamMemberRecordObject>() {{
+        add(new TeamMemberRecordObject(1, "Dinh", "Tam"));
+        add(new TeamMemberRecordObject(2, "Glew", "Tyler"));
+        add(new TeamMemberRecordObject(3, "Goldenberg", "Edward"));
+        add(new TeamMemberRecordObject(4, "Mattison", "Connor"));
+        add(new TeamMemberRecordObject(5, "Werner", "Isabella"));
+    }};
 
     @Override
     public boolean addRecord(TeamMemberRecordObject record) {

@@ -10,6 +10,12 @@ public abstract class PersonRecord {
         firstName = "";
     }
 
+    public PersonRecord(int id, String lastName, String firstName) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
     public void setID(int id) {
         this.id = id;
     }
