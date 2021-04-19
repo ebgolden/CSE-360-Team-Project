@@ -34,13 +34,13 @@ public class Main {
     private static GetVaccinesByType getVaccinesByType = new GetVaccinesByType();
     private static GetVaccinesByLocation getVaccinesByLocation = new GetVaccinesByLocation();
     private static JFileChooser fileChooser = new JFileChooser();
-    private static final int BAR_CHART_HEIGHT = 325, BAR_CHART_WIDTH = 550, BAR_CHART_X_START = 250, BAR_CHART_Y_START = 350, BAR_OFFSET = 2;
+    private static final int BAR_CHART_HEIGHT = 325, BAR_CHART_WIDTH = 1000, BAR_CHART_X_START = 250, BAR_CHART_Y_START = 350, BAR_OFFSET = 2;
     private static final Map<JLabel, JLabel> BAR_LABEL_MAP = new HashMap<>();
     private static final JFrame main = new JFrame("Covid Data");
 
     public static void main (String[] args) {
         JButton about=new JButton("About");
-        main.setSize(800,500);
+        main.setSize(1000,550);
         about.setBounds(0,0,100,50);
         main.add(about);
 
@@ -406,9 +406,9 @@ public class Main {
         bar.setHorizontalAlignment(JLabel.CENTER);
         barLabel.setVerticalAlignment(JLabel.CENTER);
         barLabel.setHorizontalAlignment(JLabel.CENTER);
-        barLabel.setFont(new Font(barLabel.getFont().getName(), Font.PLAIN, 10));
+        barLabel.setFont(new Font(barLabel.getFont().getName(), Font.PLAIN, 8));
         main.add(bar);
-        main.add(barLabel);
+        main.add(barLabel, BorderLayout.CENTER);
         bar.setVisible(true);
         barLabel.setVisible(true);
         BAR_LABEL_MAP.put(bar, barLabel);
