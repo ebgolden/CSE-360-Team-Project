@@ -18,9 +18,11 @@ public class AddVaccineDataDataAccessManager {
         return vaccineRecordObject;
     }
 
-    public AddVaccineDataResultObject getAddVaccineDataResultObject(boolean successfullyAddedRecord) {
+    public AddVaccineDataResultObject getAddVaccineDataResultObject(boolean successfullyAddedRecord, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException) {
         AddVaccineDataResultObject addVaccineDataResultObject = new AddVaccineDataResultObject();
         addVaccineDataResultObject.successfullyAddedRecord = successfullyAddedRecord;
+        addVaccineDataResultObject.idFormatException = idFormatException;
+        addVaccineDataResultObject.vaccinationDateFormatException = vaccinationDateFormatException;
         return addVaccineDataResultObject;
     }
 
@@ -31,9 +33,11 @@ public class AddVaccineDataDataAccessManager {
         return vaccineRecordObjects;
     }
 
-    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(boolean successfullyAddedRecords) {
+    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(boolean successfullyAddedRecords, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException) {
         LoadVaccineDataResultObject loadVaccineDataResultObject = new LoadVaccineDataResultObject();
         loadVaccineDataResultObject.successfullyAddedRecords = successfullyAddedRecords;
+        loadVaccineDataResultObject.idFormatException = idFormatException;
+        loadVaccineDataResultObject.vaccinationDateFormatException = vaccinationDateFormatException;
         return loadVaccineDataResultObject;
     }
 }

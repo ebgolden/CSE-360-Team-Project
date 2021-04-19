@@ -7,4 +7,6 @@ public class AddVaccineDataObject {
     public String vaccineType;
     public String vaccinationDate;
     public String vaccineLocation;
+    public NumberFormatException idFormatException;
+    public NumberFormatException vaccinationDateFormatException;
 }

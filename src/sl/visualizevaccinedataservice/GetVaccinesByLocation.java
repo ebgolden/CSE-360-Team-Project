@@ -15,7 +15,6 @@ public class GetVaccinesByLocation {
 
     public GetVaccinesByLocationResponse getGetVaccinesByLocationResponse() {
         GetVaccinesByLocationResultObject getVaccinesByLocationResultObject = visualizeVaccineDataBusinessLogic.getGetVaccinesByLocationResultObject();
-        GetVaccinesByLocationResponse getVaccinesByLocationResponse = visualizeVaccineDataBusinessLogicManager.getGetVaccinesByLocationResponse(getVaccinesByLocationResultObject);
-        return getVaccinesByLocationResponse;
+        return visualizeVaccineDataBusinessLogicManager.getGetVaccinesByLocationResponse(getVaccinesByLocationResultObject);
     }
 }

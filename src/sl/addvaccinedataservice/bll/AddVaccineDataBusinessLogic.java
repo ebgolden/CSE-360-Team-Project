@@ -18,14 +18,28 @@ public class AddVaccineDataBusinessLogic {
     }
 
     public AddVaccineDataResultObject getAddVaccineDataResultObject(AddVaccineDataObject addVaccineDataObject) {
-        VaccineRecordObject vaccineRecordObject = addVaccineDataDataAccessManager.getVaccineRecordObject(addVaccineDataObject);
-        boolean successfullyAddedRecord = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(vaccineRecordObject);
-        return addVaccineDataDataAccessManager.getAddVaccineDataResultObject(successfullyAddedRecord);
+        boolean successfullyAddedRecord = false;
+        if (addVaccineDataObject.idFormatException == null && addVaccineDataObject.vaccinationDateFormatException == null) {
+            VaccineRecordObject vaccineRecordObject = addVaccineDataDataAccessManager.getVaccineRecordObject(addVaccineDataObject);
+            successfullyAddedRecord = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(vaccineRecordObject);
+        }
+        return addVaccineDataDataAccessManager.getAddVaccineDataResultObject(successfullyAddedRecord, addVaccineDataObject.idFormatException, addVaccineDataObject.vaccinationDateFormatException);
     }
 
     public LoadVaccineDataResultObject getLoadVaccineDataResultObject(LoadVaccineDataObject loadVaccineDataObject) {
-        VaccineRecordObject[] vaccineRecordObjects = addVaccineDataDataAccessManager.getVaccineRecordObjects(loadVaccineDataObject);
-        boolean successfullyAddedRecords = addVaccineDataDataAccess.getLoadVaccineDataDataAccessResultObject(vaccineRecordObjects);
-        return addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(successfullyAddedRecords);
+        boolean successfullyAddedRecords = false;
+        NumberFormatException idFormatException = null;
+        NumberFormatException vaccinationDateFormatException = null;
+        for (AddVaccineDataObject addVaccineDataObject : loadVaccineDataObject.vaccineDataObjects) {
+            if (idFormatException == null && addVaccineDataObject.idFormatException != null)
+                idFormatException = addVaccineDataObject.idFormatException;
+            if (vaccinationDateFormatException == null && addVaccineDataObject.vaccinationDateFormatException != null)
+                vaccinationDateFormatException = addVaccineDataObject.vaccinationDateFormatException;
+        }
+        if (idFormatException == null && vaccinationDateFormatException == null) {
+            VaccineRecordObject[] vaccineRecordObjects = addVaccineDataDataAccessManager.getVaccineRecordObjects(loadVaccineDataObject);
+            successfullyAddedRecords = addVaccineDataDataAccess.getLoadVaccineDataDataAccessResultObject(vaccineRecordObjects);
+        }
+        return addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(successfullyAddedRecords, idFormatException, vaccinationDateFormatException);
     }
 }
