@@ -57,11 +57,11 @@ public class Main {
         main. add(saveData);
 
         JButton visDataByType=new JButton("Visualize Data by Vaccine Type");
-        visDataByType.setBounds(0,250,250,50);
+        visDataByType.setBounds(0,350,250,50);
         main.add(visDataByType);
 
         JButton visDataByLocation=new JButton("Visualize Data by Vaccine Location");
-        visDataByLocation.setBounds(0,300,250,50);
+        visDataByLocation.setBounds(0,400,250,50);
         main.add(visDataByLocation);
 
         main.setLayout(null);
