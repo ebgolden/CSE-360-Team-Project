@@ -16,13 +16,6 @@ public class SaveVaccineDataBusinessLogic {
 
     public SaveVaccineDataResultObject getSaveVaccineDataResultObject() {
         SaveVaccineDataDataAccessObject saveVaccineDataDataAccessObject = saveVaccineDataDataAccess.getSaveVaccineDataDataAccessObject();
-        SaveVaccineDataResultObject saveVaccineDataResultObject = saveVaccineDataDataAccessManager.getSaveVaccineDataResultObject(saveVaccineDataDataAccessObject);
-        saveVaccineDataResultObject = filterSaveVaccineDataResultObject(saveVaccineDataResultObject);
-        return saveVaccineDataResultObject;
-    }
-
-    private SaveVaccineDataResultObject filterSaveVaccineDataResultObject(SaveVaccineDataResultObject saveVaccineDataResultObject) {
-        SaveVaccineDataResultObject filteredSaveVaccineDataResultObject = saveVaccineDataResultObject;
-        return filteredSaveVaccineDataResultObject;
+        return saveVaccineDataDataAccessManager.getSaveVaccineDataResultObject(saveVaccineDataDataAccessObject);
     }
 }

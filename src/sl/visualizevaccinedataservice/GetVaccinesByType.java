@@ -15,7 +15,6 @@ public class GetVaccinesByType {
 
     public GetVaccinesByTypeResponse getGetVaccinesByTypeResponse() {
         GetVaccinesByTypeResultObject getVaccinesByTypeResultObject = visualizeVaccineDataBusinessLogic.getGetVaccinesByTypeResultObject();
-        GetVaccinesByTypeResponse getVaccinesByTypeResponse = visualizeVaccineDataBusinessLogicManager.getGetVaccinesByTypeResponse(getVaccinesByTypeResultObject);
-        return getVaccinesByTypeResponse;
+        return visualizeVaccineDataBusinessLogicManager.getGetVaccinesByTypeResponse(getVaccinesByTypeResultObject);
     }
 }

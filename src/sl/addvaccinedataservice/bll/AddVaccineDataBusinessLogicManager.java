@@ -10,7 +10,7 @@ import sl.addvaccinedataservice.bll.blo.LoadVaccineDataResultObject;
 public class AddVaccineDataBusinessLogicManager {
     public AddVaccineDataObject getAddVaccineDataObject(String vaccineData) {
         AddVaccineDataObject addVaccineDataObject = new AddVaccineDataObject();
-        String vaccineDataAttributes[] = splitVaccineDataIntoAttributes(vaccineData);
+        String[] vaccineDataAttributes = splitVaccineDataIntoAttributes(vaccineData);
         addVaccineDataObject.id = Integer.parseInt(vaccineDataAttributes[0]);
         addVaccineDataObject.lastName = vaccineDataAttributes[1];
         addVaccineDataObject.firstName = vaccineDataAttributes[2];
@@ -21,8 +21,7 @@ public class AddVaccineDataBusinessLogicManager {
     }
 
     private String[] splitVaccineDataIntoAttributes(String vaccineData) {
-        String[] vaccineDataByAttributesList = vaccineData.split(",");
-        return vaccineDataByAttributesList;
+        return vaccineData.split(",");
     }
 
     public AddVaccineDataResponse getAddVaccineDataResponse(AddVaccineDataResultObject addVaccineDataResultObject) {
@@ -33,7 +32,7 @@ public class AddVaccineDataBusinessLogicManager {
 
     public LoadVaccineDataObject getLoadVaccineDataObject(String vaccineData) {
         LoadVaccineDataObject loadVaccineDataObject = new LoadVaccineDataObject();
-        String vaccineDataRows[] = splitVaccineDataIntoRows(vaccineData);
+        String[] vaccineDataRows = splitVaccineDataIntoRows(vaccineData);
         loadVaccineDataObject.vaccineDataObjects = new AddVaccineDataObject[vaccineDataRows.length];
         for (int vaccineDataIndex = 0; vaccineDataIndex < vaccineDataRows.length; ++vaccineDataIndex)
             loadVaccineDataObject.vaccineDataObjects[vaccineDataIndex] = getAddVaccineDataObject(vaccineDataRows[vaccineDataIndex]);
@@ -41,11 +40,9 @@ public class AddVaccineDataBusinessLogicManager {
     }
 
     private String[] splitVaccineDataIntoRows(String vaccineData) {
-        String[] vaccineDataRowsStringList = null;
         if (!vaccineData.contains("\r\n"))
-            vaccineDataRowsStringList = new String[] { vaccineData };
-        else vaccineDataRowsStringList = vaccineData.split("\r\n");
-        return vaccineDataRowsStringList;
+            return new String[] { vaccineData };
+        return vaccineData.split("\r\n");
     }
 
     public LoadVaccineDataResponse getLoadVaccineDataResponse(LoadVaccineDataResultObject loadVaccineDataResultObject) {

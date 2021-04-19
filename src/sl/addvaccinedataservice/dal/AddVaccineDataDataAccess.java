@@ -7,12 +7,10 @@ public class AddVaccineDataDataAccess {
     private static VaccineRecordTable vaccineRecordTable = new VaccineRecordTable();
 
     public boolean getAddVaccineDataDataAccessResultObject(VaccineRecordObject vaccineRecordObject) {
-        boolean successfullyAddedRecord = vaccineRecordTable.addRecord(vaccineRecordObject);
-        return successfullyAddedRecord;
+        return vaccineRecordTable.addRecord(vaccineRecordObject);
     }
 
     public boolean getLoadVaccineDataDataAccessResultObject(VaccineRecordObject[] vaccineRecordObjects) {
-        boolean successfullyAddedRecords = vaccineRecordTable.addRecords(vaccineRecordObjects);
-        return successfullyAddedRecords;
+        return vaccineRecordTable.addRecords(vaccineRecordObjects);
     }
 }

@@ -24,6 +24,7 @@ public class VisualizeVaccineDataBusinessLogic {
 
     private GetVaccinesByLocationResultObject filterGetVaccinesByLocationResultObject(GetVaccinesByLocationResultObject getVaccinesByLocationResultObject) {
         GetVaccinesByLocationResultObject filteredGetVaccinesByLocationResultObject = getVaccinesByLocationResultObject;
+        //code to filter
         return filteredGetVaccinesByLocationResultObject;
     }
 
@@ -36,6 +37,7 @@ public class VisualizeVaccineDataBusinessLogic {
 
     private GetVaccinesByTypeResultObject filterGetVaccinesByTypeResultObject(GetVaccinesByTypeResultObject getVaccinesByTypeResultObject) {
         GetVaccinesByTypeResultObject filteredGetVaccinesByTypeResultObject = getVaccinesByTypeResultObject;
+        //code to filter
         return filteredGetVaccinesByTypeResultObject;
     }
 }

@@ -3,7 +3,6 @@ package sl.aboutteamservice;
 import dal.dao.TeamMemberRecordObject;
 import sl.aboutteamservice.bll.AboutTeamBusinessLogic;
 import sl.aboutteamservice.bll.AboutTeamBusinessLogicManager;
-import sl.aboutteamservice.bll.blo.AboutTeamObject;
 
 public class GetTeamInfo {
     private AboutTeamBusinessLogicManager aboutTeamBusinessLogicManager;
@@ -16,7 +15,6 @@ public class GetTeamInfo {
 
     public GetTeamInfoResponse getGetTeamInfoResponse() {
         TeamMemberRecordObject[] teamMemberRecordObjects = aboutTeamBusinessLogic.getTeamMemberRecordObjects();
-        GetTeamInfoResponse getTeamInfoResponse = aboutTeamBusinessLogicManager.getGetTeamInfoResponse(teamMemberRecordObjects);
-        return getTeamInfoResponse;
+        return aboutTeamBusinessLogicManager.getGetTeamInfoResponse(teamMemberRecordObjects);
     }
 }

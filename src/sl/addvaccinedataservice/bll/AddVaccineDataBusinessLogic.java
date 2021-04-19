@@ -20,14 +20,12 @@ public class AddVaccineDataBusinessLogic {
     public AddVaccineDataResultObject getAddVaccineDataResultObject(AddVaccineDataObject addVaccineDataObject) {
         VaccineRecordObject vaccineRecordObject = addVaccineDataDataAccessManager.getVaccineRecordObject(addVaccineDataObject);
         boolean successfullyAddedRecord = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(vaccineRecordObject);
-        AddVaccineDataResultObject addVaccineDataResultObject = addVaccineDataDataAccessManager.getAddVaccineDataResultObject(successfullyAddedRecord);
-        return addVaccineDataResultObject;
+        return addVaccineDataDataAccessManager.getAddVaccineDataResultObject(successfullyAddedRecord);
     }
 
     public LoadVaccineDataResultObject getLoadVaccineDataResultObject(LoadVaccineDataObject loadVaccineDataObject) {
         VaccineRecordObject[] vaccineRecordObjects = addVaccineDataDataAccessManager.getVaccineRecordObjects(loadVaccineDataObject);
         boolean successfullyAddedRecords = addVaccineDataDataAccess.getLoadVaccineDataDataAccessResultObject(vaccineRecordObjects);
-        LoadVaccineDataResultObject loadVaccineDataResultObject = addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(successfullyAddedRecords);
-        return loadVaccineDataResultObject;
+        return addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(successfullyAddedRecords);
     }
 }

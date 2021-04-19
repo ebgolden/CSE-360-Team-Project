@@ -11,13 +11,6 @@ public class AboutTeamBusinessLogic {
     }
 
     public TeamMemberRecordObject[] getTeamMemberRecordObjects() {
-        TeamMemberRecordObject[] teamMemberRecordObjects = aboutTeamDataAccess.getAboutTeamDataAccessObject();
-        teamMemberRecordObjects = filterAboutTeamObject(teamMemberRecordObjects);
-        return teamMemberRecordObjects;
-    }
-
-    private TeamMemberRecordObject[] filterAboutTeamObject(TeamMemberRecordObject[] teamMemberRecordObjects) {
-        TeamMemberRecordObject[] filteredTeamMemberRecordObjects = teamMemberRecordObjects;
-        return filteredTeamMemberRecordObjects;
+        return aboutTeamDataAccess.getAboutTeamDataAccessObject();
     }
 }
