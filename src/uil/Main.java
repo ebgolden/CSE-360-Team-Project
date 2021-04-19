@@ -1,6 +1,7 @@
 package uil;
 
 import dal.dao.TeamMemberRecordObject;
+import dal.dao.VaccineRecordObject;
 import sl.aboutteamservice.GetTeamInfo;
 import sl.addvaccinedataservice.AddVaccineData;
 import sl.addvaccinedataservice.AddVaccineDataResponse;
@@ -8,12 +9,21 @@ import sl.addvaccinedataservice.LoadVaccineData;
 import sl.addvaccinedataservice.LoadVaccineDataResponse;
 import sl.savevaccinedataservice.SaveVaccineData;
 import sl.savevaccinedataservice.SaveVaccineDataResponse;
+import sl.visualizevaccinedataservice.GetVaccinesByLocation;
+import sl.visualizevaccinedataservice.GetVaccinesByLocationResponse;
+import sl.visualizevaccinedataservice.GetVaccinesByType;
+import sl.visualizevaccinedataservice.GetVaccinesByTypeResponse;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 
 public class Main {
@@ -21,11 +31,14 @@ public class Main {
     private static LoadVaccineData loadVaccineData = new LoadVaccineData();
     private static AddVaccineData addVaccineData = new AddVaccineData();
     private static SaveVaccineData saveVaccineData = new SaveVaccineData();
-    private static JFileChooser fc = new JFileChooser();
+    private static GetVaccinesByType getVaccinesByType = new GetVaccinesByType();
+    private static GetVaccinesByLocation getVaccinesByLocation = new GetVaccinesByLocation();
+    private static JFileChooser fileChooser = new JFileChooser();
+    private static final int BAR_CHART_HEIGHT = 325, BAR_CHART_WIDTH = 550, BAR_CHART_X_START = 250, BAR_CHART_Y_START = 350, BAR_OFFSET = 2;
+    private static final Map<JLabel, JLabel> BAR_LABEL_MAP = new HashMap<>();
+    private static final JFrame main = new JFrame("Covid Data");
 
     public static void main (String[] args) {
-        JFrame main=new JFrame("Covid Data");
-
         JButton about=new JButton("About");
         main.setSize(800,500);
         about.setBounds(0,0,100,50);
@@ -43,9 +56,13 @@ public class Main {
         saveData.setBounds(0,200,100,50);
         main. add(saveData);
 
-        JButton visData=new JButton("Visualize Data");
-        visData.setBounds(0,250,150,50);
-        main.add(visData);
+        JButton visDataByType=new JButton("Visualize Data by Vaccine Type");
+        visDataByType.setBounds(0,250,250,50);
+        main.add(visDataByType);
+
+        JButton visDataByLocation=new JButton("Visualize Data by Vaccine Location");
+        visDataByLocation.setBounds(0,300,250,50);
+        main.add(visDataByLocation);
 
         main.setLayout(null);
         main.setVisible(true);
@@ -170,7 +187,8 @@ public class Main {
             aboutEx.setText(aboutExText.toString());
             aboutEx.setEditable(false);
             aboutEx.setVisible(true);
-
+            BAR_LABEL_MAP.forEach(Main::removeBarLabel);
+            BAR_LABEL_MAP.clear();
         });
 
 
@@ -193,44 +211,48 @@ public class Main {
             load.setVisible(true);
             loadInput.setVisible(true);
             loadSubmit.setVisible(true);
+            BAR_LABEL_MAP.forEach(Main::removeBarLabel);
+            BAR_LABEL_MAP.clear();
 
-            int returnVal = fc.showOpenDialog(main);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
+            int returnOperation = fileChooser.showOpenDialog(main);
+            if (returnOperation == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
                 loadInput.setText(file.getAbsolutePath());
             } else {
                 loadInput.setText("");
             }
         });
         loadSubmit.addActionListener(e -> {
-            if (loadInput.getText() != null && !loadInput.getText().equals(""))
-            {
-                try {
-                    LoadVaccineDataResponse loadVaccineDataResponse = loadVaccineData.getLoadVaccineDataResponse(new String(Files.readAllBytes(Paths.get(loadInput.getText()))));
-                    if (loadVaccineDataResponse.vaccinationDataSuccessfullyAdded) {
-                        addResult.setText("Vaccine record successfully added");
-                        addResult.setForeground(Color.green);
-                    }
-                    else {
-                        String errorText = "<html>";
-                        if (loadVaccineDataResponse.idFormatException != null)
-                            errorText += loadVaccineDataResponse.idFormatException.getMessage() + "<br/>";
-                        if (loadVaccineDataResponse.vaccinationDateFormatException != null)
-                            errorText += loadVaccineDataResponse.vaccinationDateFormatException.getMessage() + "<br/>";
-                        if (loadVaccineDataResponse.missingInformationException != null)
-                            errorText += loadVaccineDataResponse.missingInformationException.getMessage();
-                        if (loadVaccineDataResponse.idFormatException == null && loadVaccineDataResponse.vaccinationDateFormatException == null && loadVaccineDataResponse.missingInformationException == null)
-                            errorText += "A record already exists with that ID";
-                        errorText += "</html>";
-                        addResult.setText(errorText);
+            if (loadInput.getText() != null && !loadInput.getText().equals("")) {
+                if (!new File(loadInput.getText()).exists()) {
+                    addResult.setVisible(true);
+                    addResult.setText("File does not exist");
+                    addResult.setForeground(Color.red);
+                } else {
+                    try {
+                        LoadVaccineDataResponse loadVaccineDataResponse = loadVaccineData.getLoadVaccineDataResponse(new String(Files.readAllBytes(Paths.get(loadInput.getText()))));
+                        if (loadVaccineDataResponse.vaccinationDataSuccessfullyAdded) {
+                            addResult.setText("Vaccine record successfully added");
+                            addResult.setForeground(Color.green);
+                        } else {
+                            String errorText = "<html>";
+                            if (loadVaccineDataResponse.idFormatException != null)
+                                errorText += loadVaccineDataResponse.idFormatException.getMessage() + "<br/>";
+                            if (loadVaccineDataResponse.vaccinationDateFormatException != null)
+                                errorText += loadVaccineDataResponse.vaccinationDateFormatException.getMessage() + "<br/>";
+                            if (loadVaccineDataResponse.missingInformationException != null)
+                                errorText += loadVaccineDataResponse.missingInformationException.getMessage();
+                            if (loadVaccineDataResponse.idFormatException == null && loadVaccineDataResponse.vaccinationDateFormatException == null && loadVaccineDataResponse.missingInformationException == null)
+                                errorText += "A record already exists with that ID";
+                            errorText += "</html>";
+                            addResult.setText(errorText);
+                            addResult.setForeground(Color.red);
+                        }
+                        addResult.setVisible(true);
+                    } catch (IOException ioException) {
+                        addResult.setText("Invalid file path");
                         addResult.setForeground(Color.red);
                     }
-                    addResult.setVisible(true);
-                }
-                catch (IOException ioException) {
-                    addResult.setText("Invalid file path");
-                    addResult.setForeground(Color.red);
                 }
             }
         });
@@ -253,7 +275,8 @@ public class Main {
             load.setVisible(false);
             loadInput.setVisible(false);
             loadSubmit.setVisible(false);
-
+            BAR_LABEL_MAP.forEach(Main::removeBarLabel);
+            BAR_LABEL_MAP.clear();
 
         });
         addSubmit.addActionListener(e -> {
@@ -297,5 +320,104 @@ public class Main {
             addResult.setVisible(true);
         });
 
+        visDataByType.addActionListener(e -> {
+            aboutEx.setVisible(false);
+            date.setVisible(false);
+            dateText.setVisible(false);
+            id.setVisible(false);
+            idText.setVisible(false);
+            lastName.setVisible(false);
+            lNameText.setVisible(false);
+            firstName.setVisible(false);
+            fNameText.setVisible(false);
+            vacType.setVisible(false);
+            vacText.setVisible(false);
+            vacLoc.setVisible(false);
+            vacLocText.setVisible(false);
+            addSubmit.setVisible(false);
+            addResult.setVisible(false);
+            load.setVisible(false);
+            loadInput.setVisible(false);
+            loadSubmit.setVisible(false);
+            BAR_LABEL_MAP.forEach(Main::removeBarLabel);
+            BAR_LABEL_MAP.clear();
+
+            GetVaccinesByTypeResponse getVaccinesByTypeResponse = getVaccinesByType.getGetVaccinesByTypeResponse();
+            Map<String, List<VaccineRecordObject>> vaccineTypeMap = getVaccinesByTypeResponse.vaccineTypeMap;
+            Map<String, Integer> recordsPerVaccineType = new HashMap<>();
+            vaccineTypeMap.forEach((type, records) -> recordsPerVaccineType.put(type, records.size()));
+            List<Integer> recordSizes = new ArrayList<>();
+            recordsPerVaccineType.forEach((type, recordCount) -> recordSizes.add(recordCount));
+            int largestRecordSize = 0;
+            if (recordSizes.stream().max(Integer::compare).isPresent())
+                largestRecordSize = recordSizes.stream().max(Integer::compare).get();
+            int barWidth = BAR_CHART_WIDTH / recordSizes.size();
+            AtomicInteger currentBarIndex = new AtomicInteger();
+            int finalLargestRecordSize = largestRecordSize;
+            recordsPerVaccineType.forEach((type, recordCount) -> createBar(type, recordCount, finalLargestRecordSize, barWidth, currentBarIndex.incrementAndGet()));
+        });
+        visDataByLocation.addActionListener(e -> {
+            aboutEx.setVisible(false);
+            date.setVisible(false);
+            dateText.setVisible(false);
+            id.setVisible(false);
+            idText.setVisible(false);
+            lastName.setVisible(false);
+            lNameText.setVisible(false);
+            firstName.setVisible(false);
+            fNameText.setVisible(false);
+            vacType.setVisible(false);
+            vacText.setVisible(false);
+            vacLoc.setVisible(false);
+            vacLocText.setVisible(false);
+            addSubmit.setVisible(false);
+            addResult.setVisible(false);
+            load.setVisible(false);
+            loadInput.setVisible(false);
+            loadSubmit.setVisible(false);
+            BAR_LABEL_MAP.forEach(Main::removeBarLabel);
+            BAR_LABEL_MAP.clear();
+
+            GetVaccinesByLocationResponse getVaccinesByLocationResponse = getVaccinesByLocation.getGetVaccinesByLocationResponse();
+            Map<String, List<VaccineRecordObject>> vaccineLocationMap = getVaccinesByLocationResponse.vaccineLocationMap;
+            Map<String, Integer> recordsPerVaccineLocation = new HashMap<>();
+            vaccineLocationMap.forEach((location, records) -> recordsPerVaccineLocation.put(location, records.size()));
+            List<Integer> recordSizes = new ArrayList<>();
+            recordsPerVaccineLocation.forEach((location, recordCount) -> recordSizes.add(recordCount));
+            int largestRecordSize = 0;
+            if (recordSizes.stream().max(Integer::compare).isPresent())
+                largestRecordSize = recordSizes.stream().max(Integer::compare).get();
+            int barWidth = BAR_CHART_WIDTH / recordSizes.size();
+            AtomicInteger currentBarIndex = new AtomicInteger();
+            int finalLargestRecordSize = largestRecordSize;
+            recordsPerVaccineLocation.forEach((location, recordCount) -> createBar(location, recordCount, finalLargestRecordSize, barWidth, currentBarIndex.incrementAndGet()));
+        });
+    }
+
+    private static void createBar(String label, int recordCount, int maxSize, int barWidth, int currentBarIndex) {
+        JLabel bar = new JLabel(String.valueOf(recordCount));
+        JLabel barLabel = new JLabel(label);
+        int barHeight = (int)(BAR_CHART_HEIGHT * ((double)recordCount / maxSize));
+        bar.setBounds(BAR_CHART_X_START + (currentBarIndex - 1) * barWidth,BAR_CHART_Y_START - barHeight, barWidth - BAR_OFFSET, barHeight);
+        bar.setOpaque(true);
+        bar.setBackground(Color.CYAN);
+        barLabel.setBounds(BAR_CHART_X_START + (currentBarIndex - 1) * barWidth - BAR_OFFSET, BAR_CHART_Y_START, barWidth, 20);
+        bar.setVerticalAlignment(JLabel.TOP);
+        bar.setHorizontalAlignment(JLabel.CENTER);
+        barLabel.setVerticalAlignment(JLabel.CENTER);
+        barLabel.setHorizontalAlignment(JLabel.CENTER);
+        barLabel.setFont(new Font(barLabel.getFont().getName(), Font.PLAIN, 10));
+        main.add(bar);
+        main.add(barLabel);
+        bar.setVisible(true);
+        barLabel.setVisible(true);
+        BAR_LABEL_MAP.put(bar, barLabel);
+    }
+
+    private static void removeBarLabel(JLabel bar, JLabel label) {
+        bar.setVisible(false);
+        label.setVisible(false);
+        main.remove(bar);
+        main.remove(label);
     }
 }
