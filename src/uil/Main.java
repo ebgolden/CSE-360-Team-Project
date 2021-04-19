@@ -4,16 +4,24 @@ import dal.dao.TeamMemberRecordObject;
 import sl.aboutteamservice.GetTeamInfo;
 import sl.addvaccinedataservice.AddVaccineData;
 import sl.addvaccinedataservice.AddVaccineDataResponse;
+import sl.addvaccinedataservice.LoadVaccineData;
+import sl.addvaccinedataservice.LoadVaccineDataResponse;
 import sl.savevaccinedataservice.SaveVaccineData;
 import sl.savevaccinedataservice.SaveVaccineDataResponse;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.*;
 
 public class Main {
     private static GetTeamInfo getTeamInfo = new GetTeamInfo();
+    private static LoadVaccineData loadVaccineData = new LoadVaccineData();
     private static AddVaccineData addVaccineData = new AddVaccineData();
     private static SaveVaccineData saveVaccineData = new SaveVaccineData();
+    private static JFileChooser fc = new JFileChooser();
 
     public static void main (String[] args) {
         JFrame main=new JFrame("Covid Data");
@@ -131,8 +139,6 @@ public class Main {
         main.add(loadSubmit);
         loadSubmit.setVisible(false);
 
-        String file;
-
         main.add(aboutEx);
 
 
@@ -188,9 +194,46 @@ public class Main {
             loadInput.setVisible(true);
             loadSubmit.setVisible(true);
 
+            int returnVal = fc.showOpenDialog(main);
 
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                loadInput.setText(file.getAbsolutePath());
+            } else {
+                loadInput.setText("");
+            }
         });
-        loadSubmit.addActionListener(e -> loadInput.getText());
+        loadSubmit.addActionListener(e -> {
+            if (loadInput.getText() != null && !loadInput.getText().equals(""))
+            {
+                try {
+                    LoadVaccineDataResponse loadVaccineDataResponse = loadVaccineData.getLoadVaccineDataResponse(new String(Files.readAllBytes(Paths.get(loadInput.getText()))));
+                    if (loadVaccineDataResponse.vaccinationDataSuccessfullyAdded) {
+                        addResult.setText("Vaccine record successfully added");
+                        addResult.setForeground(Color.green);
+                    }
+                    else {
+                        String errorText = "<html>";
+                        if (loadVaccineDataResponse.idFormatException != null)
+                            errorText += loadVaccineDataResponse.idFormatException.getMessage() + "<br/>";
+                        if (loadVaccineDataResponse.vaccinationDateFormatException != null)
+                            errorText += loadVaccineDataResponse.vaccinationDateFormatException.getMessage() + "<br/>";
+                        if (loadVaccineDataResponse.missingInformationException != null)
+                            errorText += loadVaccineDataResponse.missingInformationException.getMessage();
+                        if (loadVaccineDataResponse.idFormatException == null && loadVaccineDataResponse.vaccinationDateFormatException == null && loadVaccineDataResponse.missingInformationException == null)
+                            errorText += "A record already exists with that ID";
+                        errorText += "</html>";
+                        addResult.setText(errorText);
+                        addResult.setForeground(Color.red);
+                    }
+                    addResult.setVisible(true);
+                }
+                catch (IOException ioException) {
+                    addResult.setText("Invalid file path");
+                    addResult.setForeground(Color.red);
+                }
+            }
+        });
         addData.addActionListener(e -> {
             aboutEx.setVisible(false);
             date.setVisible(true);
@@ -210,6 +253,8 @@ public class Main {
             load.setVisible(false);
             loadInput.setVisible(false);
             loadSubmit.setVisible(false);
+
+
         });
         addSubmit.addActionListener(e -> {
             String vaccineDataString = idText.getText().replace(",", " ")
