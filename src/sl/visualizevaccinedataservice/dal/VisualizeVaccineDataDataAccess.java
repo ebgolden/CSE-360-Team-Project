@@ -1,15 +1,16 @@
 package sl.visualizevaccinedataservice.dal;
 
-import sl.visualizevaccinedataservice.dal.dao.VisualizeVaccineDataDataAccessObject;
+import dal.dao.VaccineRecordObject;
+import dal.dao.VaccineRecordTable;
 
 public class VisualizeVaccineDataDataAccess {
+    private VaccineRecordTable vaccineRecordTable;
+
     public VisualizeVaccineDataDataAccess() {
-        //constructor code
+        vaccineRecordTable = new VaccineRecordTable();
     }
 
-    public VisualizeVaccineDataDataAccessObject getVisualizeVaccineDataDataAccessObject() {
-        VisualizeVaccineDataDataAccessObject visualizeVaccineDataDataAccessObject = new VisualizeVaccineDataDataAccessObject();
-        //code to populate visualizeVaccineDataDataAccessObject
-        return visualizeVaccineDataDataAccessObject;
+    public VaccineRecordObject[] getVaccineRecordObjects() {
+        return vaccineRecordTable.getRecords();
     }
 }
