@@ -1,16 +1,18 @@
 package sl.addvaccinedataservice.dal;
 
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessObject;
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessResultObject;
+import dal.dao.VaccineRecordObject;
+import dal.dao.VaccineRecordTable;
 
 public class AddVaccineDataDataAccess {
-    public AddVaccineDataDataAccess() {
-        //constructor code
+    private static VaccineRecordTable vaccineRecordTable = new VaccineRecordTable();
+
+    public boolean getAddVaccineDataDataAccessResultObject(VaccineRecordObject vaccineRecordObject) {
+        boolean successfullyAddedRecord = vaccineRecordTable.addRecord(vaccineRecordObject);
+        return successfullyAddedRecord;
     }
 
-    public AddVaccineDataDataAccessResultObject getAddVaccineDataDataAccessResultObject(AddVaccineDataDataAccessObject addVaccineDataDataAccessObject) {
-        AddVaccineDataDataAccessResultObject addVaccineDataDataAccessResultObject = new AddVaccineDataDataAccessResultObject();
-        //code to populate addVaccineDataDataAccessResultObject
-        return addVaccineDataDataAccessResultObject;
+    public boolean getLoadVaccineDataDataAccessResultObject(VaccineRecordObject[] vaccineRecordObjects) {
+        boolean successfullyAddedRecords = vaccineRecordTable.addRecords(vaccineRecordObjects);
+        return successfullyAddedRecords;
     }
 }

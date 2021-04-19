@@ -14,8 +14,8 @@ public class AddVaccineData {
         addVaccineDataBusinessLogic = new AddVaccineDataBusinessLogic();
     }
 
-    public AddVaccineDataResponse getAddVaccineDataResponse(AddVaccineDataRequest addVaccineDataRequest) {
-        AddVaccineDataObject addDataObject = addVaccineDataBusinessLogicManager.getAddVaccineDataObject(addVaccineDataRequest);
+    public AddVaccineDataResponse getAddVaccineDataResponse(String vaccineData) {
+        AddVaccineDataObject addDataObject = addVaccineDataBusinessLogicManager.getAddVaccineDataObject(vaccineData);
         AddVaccineDataResultObject addDataResultObject = addVaccineDataBusinessLogic.getAddVaccineDataResultObject(addDataObject);
         AddVaccineDataResponse addVaccineDataResponse = addVaccineDataBusinessLogicManager.getAddVaccineDataResponse(addDataResultObject);
         return addVaccineDataResponse;

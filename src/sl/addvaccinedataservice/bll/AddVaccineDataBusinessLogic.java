@@ -1,13 +1,12 @@
 package sl.addvaccinedataservice.bll;
 
+import dal.dao.VaccineRecordObject;
 import sl.addvaccinedataservice.bll.blo.AddVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.AddVaccineDataResultObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataResultObject;
 import sl.addvaccinedataservice.dal.AddVaccineDataDataAccess;
 import sl.addvaccinedataservice.dal.AddVaccineDataDataAccessManager;
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessObject;
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessResultObject;
 
 public class AddVaccineDataBusinessLogic {
     private AddVaccineDataDataAccessManager addVaccineDataDataAccessManager;
@@ -19,28 +18,16 @@ public class AddVaccineDataBusinessLogic {
     }
 
     public AddVaccineDataResultObject getAddVaccineDataResultObject(AddVaccineDataObject addVaccineDataObject) {
-        AddVaccineDataDataAccessObject addVaccineDataDataAccessObject = addVaccineDataDataAccessManager.getAddVaccineDataDataAccessObject(addVaccineDataObject);
-        AddVaccineDataDataAccessResultObject addVaccineDataDataAccessResultObject = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(addVaccineDataDataAccessObject);
-        AddVaccineDataResultObject addVaccineDataResultObject = addVaccineDataDataAccessManager.getAddVaccineDataResultObject(addVaccineDataDataAccessResultObject);
-        addVaccineDataResultObject = filterAddVaccineDataResultObject(addVaccineDataResultObject);
+        VaccineRecordObject vaccineRecordObject = addVaccineDataDataAccessManager.getVaccineRecordObject(addVaccineDataObject);
+        boolean successfullyAddedRecord = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(vaccineRecordObject);
+        AddVaccineDataResultObject addVaccineDataResultObject = addVaccineDataDataAccessManager.getAddVaccineDataResultObject(successfullyAddedRecord);
         return addVaccineDataResultObject;
     }
 
-    private AddVaccineDataResultObject filterAddVaccineDataResultObject(AddVaccineDataResultObject addVaccineDataResultObject) {
-        AddVaccineDataResultObject filteredAddVaccineDataResultObject = addVaccineDataResultObject;
-        return filteredAddVaccineDataResultObject;
-    }
-
     public LoadVaccineDataResultObject getLoadVaccineDataResultObject(LoadVaccineDataObject loadVaccineDataObject) {
-        AddVaccineDataDataAccessObject addVaccineDataDataAccessObject = addVaccineDataDataAccessManager.getAddVaccineDataDataAccessObject(loadVaccineDataObject);
-        AddVaccineDataDataAccessResultObject addVaccineDataDataAccessResultObject = addVaccineDataDataAccess.getAddVaccineDataDataAccessResultObject(addVaccineDataDataAccessObject);
-        LoadVaccineDataResultObject loadVaccineDataResultObject = addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(addVaccineDataDataAccessResultObject);
-        loadVaccineDataResultObject = filterLoadVaccineDataResultObject(loadVaccineDataResultObject);
+        VaccineRecordObject[] vaccineRecordObjects = addVaccineDataDataAccessManager.getVaccineRecordObjects(loadVaccineDataObject);
+        boolean successfullyAddedRecords = addVaccineDataDataAccess.getLoadVaccineDataDataAccessResultObject(vaccineRecordObjects);
+        LoadVaccineDataResultObject loadVaccineDataResultObject = addVaccineDataDataAccessManager.getLoadVaccineDataResultObject(successfullyAddedRecords);
         return loadVaccineDataResultObject;
-    }
-
-    private LoadVaccineDataResultObject filterLoadVaccineDataResultObject(LoadVaccineDataResultObject loadVaccineDataResultObject) {
-        LoadVaccineDataResultObject filteredLoadVaccineDataResultObject = loadVaccineDataResultObject;
-        return filteredLoadVaccineDataResultObject;
     }
 }

@@ -1,39 +1,39 @@
 package sl.addvaccinedataservice.dal;
 
-import sl.addvaccinedataservice.AddVaccineDataResponse;
+import dal.dao.VaccineRecordObject;
 import sl.addvaccinedataservice.bll.blo.AddVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.AddVaccineDataResultObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataResultObject;
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessObject;
-import sl.addvaccinedataservice.dal.dao.AddVaccineDataDataAccessResultObject;
 
 public class AddVaccineDataDataAccessManager {
-    public AddVaccineDataDataAccessManager() {
-        //constructor code
+    public VaccineRecordObject getVaccineRecordObject(AddVaccineDataObject addVaccineDataObject) {
+        VaccineRecordObject vaccineRecordObject = new VaccineRecordObject();
+        vaccineRecordObject.setID(addVaccineDataObject.id);
+        vaccineRecordObject.setLastName(addVaccineDataObject.lastName);
+        vaccineRecordObject.setFirstName(addVaccineDataObject.firstName);
+        vaccineRecordObject.setVaccineType(addVaccineDataObject.vaccineType);
+        vaccineRecordObject.setVaccinationDate(addVaccineDataObject.vaccinationDate);
+        vaccineRecordObject.setVaccineLocation(addVaccineDataObject.vaccineLocation);
+        return vaccineRecordObject;
     }
 
-    public AddVaccineDataDataAccessObject getAddVaccineDataDataAccessObject(AddVaccineDataObject addVaccineDataObject) {
-        AddVaccineDataDataAccessObject addVaccineDataDataAccessObject = new AddVaccineDataDataAccessObject();
-        //code to populate addVaccineDataDataAccessObject
-        return addVaccineDataDataAccessObject;
-    }
-
-    public AddVaccineDataResultObject getAddVaccineDataResultObject(AddVaccineDataDataAccessResultObject addVaccineDataDataAccessResultObject) {
+    public AddVaccineDataResultObject getAddVaccineDataResultObject(boolean successfullyAddedRecord) {
         AddVaccineDataResultObject addVaccineDataResultObject = new AddVaccineDataResultObject();
-        //code to populate addVaccineDataResultObject
+        addVaccineDataResultObject.successfullyAddedRecord = successfullyAddedRecord;
         return addVaccineDataResultObject;
     }
 
-    public AddVaccineDataDataAccessObject getAddVaccineDataDataAccessObject(LoadVaccineDataObject loadVaccineDataObject) {
-        AddVaccineDataDataAccessObject addVaccineDataDataAccessObject = new AddVaccineDataDataAccessObject();
-        //code to populate addVaccineDataDataAccessObject
-        return addVaccineDataDataAccessObject;
+    public VaccineRecordObject[] getVaccineRecordObjects(LoadVaccineDataObject loadVaccineDataObject) {
+        VaccineRecordObject[] vaccineRecordObjects = new VaccineRecordObject[loadVaccineDataObject.vaccineDataObjects.length];
+        for (int vaccineRecordIndex = 0; vaccineRecordIndex < loadVaccineDataObject.vaccineDataObjects.length; ++vaccineRecordIndex)
+            vaccineRecordObjects[vaccineRecordIndex] = getVaccineRecordObject(loadVaccineDataObject.vaccineDataObjects[vaccineRecordIndex]);
+        return vaccineRecordObjects;
     }
 
-    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(AddVaccineDataDataAccessResultObject addVaccineDataDataAccessResultObject) {
+    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(boolean successfullyAddedRecords) {
         LoadVaccineDataResultObject loadVaccineDataResultObject = new LoadVaccineDataResultObject();
-        //code to populate loadVaccineDataResultObject
+        loadVaccineDataResultObject.successfullyAddedRecords = successfullyAddedRecords;
         return loadVaccineDataResultObject;
     }
 }

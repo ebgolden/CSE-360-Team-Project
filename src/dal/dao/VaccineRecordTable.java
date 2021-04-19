@@ -16,17 +16,12 @@ public class VaccineRecordTable extends RecordTable<VaccineRecordObject> {
     }
 
     @Override
-    public boolean addRecords(List<VaccineRecordObject> records) {
-        for (VaccineRecordObject record : records)
-            if (recordWithIDExists(record))
-                return false;
-        for (VaccineRecordObject record : records)
-            addRecord(record);
-        return true;
+    protected boolean recordWithIDExists(VaccineRecordObject record) {
+        return vaccineRecordTable.stream().anyMatch(recordInTable -> recordInTable.getID() == record.getID());
     }
 
     @Override
-    protected boolean recordWithIDExists(VaccineRecordObject record) {
-        return vaccineRecordTable.stream().anyMatch(recordInTable -> recordInTable.getID() == record.getID());
+    public List<VaccineRecordObject> getRecords() {
+        return vaccineRecordTable;
     }
 }

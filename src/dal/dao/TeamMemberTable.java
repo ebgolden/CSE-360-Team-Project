@@ -16,17 +16,12 @@ public class TeamMemberTable extends RecordTable<TeamMemberRecordObject> {
     }
 
     @Override
-    public boolean addRecords(List<TeamMemberRecordObject> records) {
-        for (TeamMemberRecordObject record : records)
-            if (recordWithIDExists(record))
-                return false;
-        for (TeamMemberRecordObject record : records)
-            addRecord(record);
-        return true;
+    protected boolean recordWithIDExists(TeamMemberRecordObject record) {
+        return teamMemberTable.stream().anyMatch(recordInTable -> recordInTable.getID() == record.getID());
     }
 
     @Override
-    protected boolean recordWithIDExists(TeamMemberRecordObject record) {
-        return teamMemberTable.stream().anyMatch(recordInTable -> recordInTable.getID() == record.getID());
+    public List<TeamMemberRecordObject> getRecords() {
+        return teamMemberTable;
     }
 }
