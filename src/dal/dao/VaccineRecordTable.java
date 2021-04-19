@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VaccineRecordTable extends RecordTable<VaccineRecordObject> {
-    private List<VaccineRecordObject> vaccineRecordTable;
-
-    public VaccineRecordTable() {
-        vaccineRecordTable = new ArrayList<>();
-    }
+    private static List<VaccineRecordObject> vaccineRecordTable = new ArrayList<>();
 
     @Override
     public boolean addRecord(VaccineRecordObject record) {

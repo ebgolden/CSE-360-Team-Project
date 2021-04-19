@@ -1,28 +1,23 @@
 package sl.aboutteamservice.bll;
 
-import sl.aboutteamservice.bll.blo.AboutTeamObject;
+import dal.dao.TeamMemberRecordObject;
 import sl.aboutteamservice.dal.AboutTeamDataAccess;
-import sl.aboutteamservice.dal.AboutTeamDataAccessManager;
-import sl.aboutteamservice.dal.dao.AboutTeamDataAccessObject;
 
 public class AboutTeamBusinessLogic {
-    private AboutTeamDataAccessManager aboutTeamDataAccessManager;
     private AboutTeamDataAccess aboutTeamDataAccess;
 
     public AboutTeamBusinessLogic() {
-        aboutTeamDataAccessManager = new AboutTeamDataAccessManager();
         aboutTeamDataAccess = new AboutTeamDataAccess();
     }
 
-    public AboutTeamObject getAboutTeamObject() {
-        AboutTeamDataAccessObject aboutTeamDataAccessObject = aboutTeamDataAccess.getAboutTeamDataAccessObject();
-        AboutTeamObject aboutTeamObject = aboutTeamDataAccessManager.getAboutTeamObject(aboutTeamDataAccessObject);
-        aboutTeamObject = filterAboutTeamObject(aboutTeamObject);
-        return aboutTeamObject;
+    public TeamMemberRecordObject[] getTeamMemberRecordObjects() {
+        TeamMemberRecordObject[] teamMemberRecordObjects = aboutTeamDataAccess.getAboutTeamDataAccessObject();
+        teamMemberRecordObjects = filterAboutTeamObject(teamMemberRecordObjects);
+        return teamMemberRecordObjects;
     }
 
-    private AboutTeamObject filterAboutTeamObject(AboutTeamObject aboutTeamObject) {
-        AboutTeamObject filteredAboutTeamObject = aboutTeamObject;
-        return filteredAboutTeamObject;
+    private TeamMemberRecordObject[] filterAboutTeamObject(TeamMemberRecordObject[] teamMemberRecordObjects) {
+        TeamMemberRecordObject[] filteredTeamMemberRecordObjects = teamMemberRecordObjects;
+        return filteredTeamMemberRecordObjects;
     }
 }

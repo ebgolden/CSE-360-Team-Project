@@ -1,16 +1,13 @@
 package sl.aboutteamservice.bll;
 
+import dal.dao.TeamMemberRecordObject;
 import sl.aboutteamservice.GetTeamInfoResponse;
 import sl.aboutteamservice.bll.blo.AboutTeamObject;
 
 public class AboutTeamBusinessLogicManager {
-    public AboutTeamBusinessLogicManager() {
-        //constructor code
-    }
-
-    public GetTeamInfoResponse getGetTeamInfoResponse(AboutTeamObject aboutTeamObject) {
+    public GetTeamInfoResponse getGetTeamInfoResponse(TeamMemberRecordObject[] teamMemberRecordObjects) {
         GetTeamInfoResponse getTeamInfoResponse = new GetTeamInfoResponse();
-        //code to populate getTeamInfoResponse
+        getTeamInfoResponse.teamMemberRecordObjects = teamMemberRecordObjects;
         return getTeamInfoResponse;
     }
 }

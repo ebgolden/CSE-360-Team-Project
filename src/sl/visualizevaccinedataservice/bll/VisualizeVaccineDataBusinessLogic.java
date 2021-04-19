@@ -1,9 +1,5 @@
 package sl.visualizevaccinedataservice.bll;
 
-import sl.aboutteamservice.bll.blo.AboutTeamObject;
-import sl.aboutteamservice.dal.AboutTeamDataAccess;
-import sl.aboutteamservice.dal.AboutTeamDataAccessManager;
-import sl.aboutteamservice.dal.dao.AboutTeamDataAccessObject;
 import sl.visualizevaccinedataservice.bll.blo.GetVaccinesByLocationResultObject;
 import sl.visualizevaccinedataservice.bll.blo.GetVaccinesByTypeResultObject;
 import sl.visualizevaccinedataservice.dal.VisualizeVaccineDataDataAccess;

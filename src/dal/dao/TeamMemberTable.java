@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamMemberTable extends RecordTable<TeamMemberRecordObject> {
-    private List<TeamMemberRecordObject> teamMemberTable;
-
-    public TeamMemberTable() {
-        teamMemberTable = new ArrayList<>();
-    }
+    private static List<TeamMemberRecordObject> teamMemberTable = new ArrayList<>();
 
     @Override
     public boolean addRecord(TeamMemberRecordObject record) {

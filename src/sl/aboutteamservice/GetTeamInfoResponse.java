@@ -1,5 +1,7 @@
 package sl.aboutteamservice;
 
+import dal.dao.TeamMemberRecordObject;
+
 public class GetTeamInfoResponse {
-    public TeamInfoObject[] teamInfoList;
+    public TeamMemberRecordObject[] teamMemberRecordObjects;
 }

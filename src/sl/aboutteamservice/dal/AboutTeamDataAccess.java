@@ -1,15 +1,22 @@
 package sl.aboutteamservice.dal;
 
-import sl.aboutteamservice.dal.dao.AboutTeamDataAccessObject;
+import dal.dao.TeamMemberRecordObject;
+import dal.dao.TeamMemberTable;
+
+import java.util.List;
 
 public class AboutTeamDataAccess {
+    private TeamMemberTable teamMemberTable;
+
     public AboutTeamDataAccess() {
-        //constructor code
+        teamMemberTable = new TeamMemberTable();
     }
 
-    public AboutTeamDataAccessObject getAboutTeamDataAccessObject() {
-        AboutTeamDataAccessObject aboutTeamDataAccessObject = new AboutTeamDataAccessObject();
-        //code to populate aboutTeamDataAccessObject
-        return aboutTeamDataAccessObject;
+    public TeamMemberRecordObject[] getAboutTeamDataAccessObject() {
+        List<TeamMemberRecordObject> teamMemberTableRecords = teamMemberTable.getRecords();
+        TeamMemberRecordObject[] teamMemberDataAccessObjects = new TeamMemberRecordObject[teamMemberTableRecords.size()];
+        for (int teamMemberIndex = 0; teamMemberIndex < teamMemberTableRecords.size(); ++teamMemberIndex)
+            teamMemberDataAccessObjects[teamMemberIndex] = teamMemberTableRecords.get(teamMemberIndex);
+        return teamMemberDataAccessObjects;
     }
 }
