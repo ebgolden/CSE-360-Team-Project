@@ -18,11 +18,12 @@ public class AddVaccineDataDataAccessManager {
         return vaccineRecordObject;
     }
 
-    public AddVaccineDataResultObject getAddVaccineDataResultObject(boolean successfullyAddedRecord, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException) {
+    public AddVaccineDataResultObject getAddVaccineDataResultObject(boolean successfullyAddedRecord, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException, NullPointerException missingInformationException) {
         AddVaccineDataResultObject addVaccineDataResultObject = new AddVaccineDataResultObject();
         addVaccineDataResultObject.successfullyAddedRecord = successfullyAddedRecord;
         addVaccineDataResultObject.idFormatException = idFormatException;
         addVaccineDataResultObject.vaccinationDateFormatException = vaccinationDateFormatException;
+        addVaccineDataResultObject.missingInformationException = missingInformationException;
         return addVaccineDataResultObject;
     }
 
@@ -33,11 +34,12 @@ public class AddVaccineDataDataAccessManager {
         return vaccineRecordObjects;
     }
 
-    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(boolean successfullyAddedRecords, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException) {
+    public LoadVaccineDataResultObject getLoadVaccineDataResultObject(boolean successfullyAddedRecords, NumberFormatException idFormatException, NumberFormatException vaccinationDateFormatException, NullPointerException missingInformationException) {
         LoadVaccineDataResultObject loadVaccineDataResultObject = new LoadVaccineDataResultObject();
         loadVaccineDataResultObject.successfullyAddedRecords = successfullyAddedRecords;
         loadVaccineDataResultObject.idFormatException = idFormatException;
         loadVaccineDataResultObject.vaccinationDateFormatException = vaccinationDateFormatException;
+        loadVaccineDataResultObject.missingInformationException = missingInformationException;
         return loadVaccineDataResultObject;
     }
 }

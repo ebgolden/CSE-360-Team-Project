@@ -9,4 +9,5 @@ public class AddVaccineDataObject {
     public String vaccineLocation;
     public NumberFormatException idFormatException;
     public NumberFormatException vaccinationDateFormatException;
+    public NullPointerException missingInformationException;
 }
