@@ -21,7 +21,9 @@ public class TeamMemberTable extends RecordTable<TeamMemberRecordObject> {
     }
 
     @Override
-    public List<TeamMemberRecordObject> getRecords() {
-        return teamMemberTable;
+    public TeamMemberRecordObject[] getRecords() {
+        TeamMemberRecordObject[] teamMemberRecordTableArray = new TeamMemberRecordObject[teamMemberTable.size()];
+        teamMemberRecordTableArray = teamMemberTable.toArray(teamMemberRecordTableArray);
+        return teamMemberRecordTableArray;
     }
 }

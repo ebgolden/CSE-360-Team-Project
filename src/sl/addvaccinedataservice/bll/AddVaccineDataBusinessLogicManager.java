@@ -6,6 +6,7 @@ import sl.addvaccinedataservice.bll.blo.AddVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.AddVaccineDataResultObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataObject;
 import sl.addvaccinedataservice.bll.blo.LoadVaccineDataResultObject;
+import java.util.Arrays;
 
 public class AddVaccineDataBusinessLogicManager {
     public AddVaccineDataObject getAddVaccineDataObject(String vaccineData) {
@@ -32,7 +33,7 @@ public class AddVaccineDataBusinessLogicManager {
 
     public LoadVaccineDataObject getLoadVaccineDataObject(String vaccineData) {
         LoadVaccineDataObject loadVaccineDataObject = new LoadVaccineDataObject();
-        String[] vaccineDataRows = splitVaccineDataIntoRows(vaccineData);
+        String[] vaccineDataRows = Arrays.stream(splitVaccineDataIntoRows(vaccineData)).skip(1).toArray(String[]::new);
         loadVaccineDataObject.vaccineDataObjects = new AddVaccineDataObject[vaccineDataRows.length];
         for (int vaccineDataIndex = 0; vaccineDataIndex < vaccineDataRows.length; ++vaccineDataIndex)
             loadVaccineDataObject.vaccineDataObjects[vaccineDataIndex] = getAddVaccineDataObject(vaccineDataRows[vaccineDataIndex]);
@@ -40,8 +41,6 @@ public class AddVaccineDataBusinessLogicManager {
     }
 
     private String[] splitVaccineDataIntoRows(String vaccineData) {
-        if (!vaccineData.contains("\r\n"))
-            return new String[] { vaccineData };
         return vaccineData.split("\r\n");
     }
 

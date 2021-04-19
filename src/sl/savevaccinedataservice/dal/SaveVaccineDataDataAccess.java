@@ -1,15 +1,16 @@
 package sl.savevaccinedataservice.dal;
 
-import sl.savevaccinedataservice.dal.dao.SaveVaccineDataDataAccessObject;
+import dal.dao.VaccineRecordObject;
+import dal.dao.VaccineRecordTable;
 
 public class SaveVaccineDataDataAccess {
+    private VaccineRecordTable vaccineRecordTable;
+
     public SaveVaccineDataDataAccess() {
-        //constructor code
+        vaccineRecordTable = new VaccineRecordTable();
     }
 
-    public SaveVaccineDataDataAccessObject getSaveVaccineDataDataAccessObject() {
-        SaveVaccineDataDataAccessObject saveVaccineDataDataAccessObject = new SaveVaccineDataDataAccessObject();
-        //code to populate saveVaccineDataDataAccessObject
-        return saveVaccineDataDataAccessObject;
+    public VaccineRecordObject[] getVaccineRecordObjects() {
+        return vaccineRecordTable.getRecords();
     }
 }

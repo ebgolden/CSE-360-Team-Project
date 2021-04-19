@@ -16,5 +16,5 @@ public abstract class RecordTable<T> {
 
     protected abstract boolean recordWithIDExists(T record);
 
-    public abstract List<T> getRecords();
+    public abstract T[] getRecords();
 }

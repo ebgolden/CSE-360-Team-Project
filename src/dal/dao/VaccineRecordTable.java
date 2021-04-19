@@ -21,7 +21,9 @@ public class VaccineRecordTable extends RecordTable<VaccineRecordObject> {
     }
 
     @Override
-    public List<VaccineRecordObject> getRecords() {
-        return vaccineRecordTable;
+    public VaccineRecordObject[] getRecords() {
+        VaccineRecordObject[] vaccineRecordTableArray = new VaccineRecordObject[vaccineRecordTable.size()];
+        vaccineRecordTableArray = vaccineRecordTable.toArray(vaccineRecordTableArray);
+        return vaccineRecordTableArray;
     }
 }
