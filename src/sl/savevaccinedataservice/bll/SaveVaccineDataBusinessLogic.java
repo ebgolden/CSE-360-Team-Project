@@ -22,19 +22,21 @@ public class SaveVaccineDataBusinessLogic {
     public SaveVaccineDataResultObject getSaveVaccineDataResultObject() {
         SaveVaccineDataResultObject saveVaccineDataResultObject = new SaveVaccineDataResultObject();
         VaccineRecordObject[] vaccineRecordObjects = saveVaccineDataDataAccess.getVaccineRecordObjects();
-        try {
-            fileWriter = new FileWriter(vaccineRecordsFile);
-            fileWriter.write("ID,Last Name,First Name,Vaccine Type,Vaccination Date,Vaccine Location");
-            for (VaccineRecordObject vaccineRecordObject : vaccineRecordObjects) {
-                String vaccineRecordLine = "\r\n" + getVaccineRecordLine(vaccineRecordObject);
-                fileWriter.write(vaccineRecordLine);
+        if (vaccineRecordObjects.length > 0) {
+            try {
+                fileWriter = new FileWriter(vaccineRecordsFile);
+                fileWriter.write("ID,Last Name,First Name,Vaccine Type,Vaccination Date,Vaccine Location");
+                for (VaccineRecordObject vaccineRecordObject : vaccineRecordObjects) {
+                    String vaccineRecordLine = "\r\n" + getVaccineRecordLine(vaccineRecordObject);
+                    fileWriter.write(vaccineRecordLine);
+                }
+                fileWriter.close();
+                saveVaccineDataResultObject.successfullySavedVaccineData = true;
+            } catch (IOException e) {
+                saveVaccineDataResultObject.successfullySavedVaccineData = false;
             }
-            fileWriter.close();
-            saveVaccineDataResultObject.successfullySavedVaccineData = true;
         }
-        catch (IOException e) {
-            saveVaccineDataResultObject.successfullySavedVaccineData = false;
-        }
+        else saveVaccineDataResultObject.successfullySavedVaccineData = false;
         return saveVaccineDataResultObject;
     }
 

@@ -3,6 +3,7 @@ package sl.visualizevaccinedataservice.bll;
 import dal.dao.VaccineRecordObject;
 import sl.visualizevaccinedataservice.bll.blo.GetVaccinesByLocationResultObject;
 import sl.visualizevaccinedataservice.bll.blo.GetVaccinesByTypeResultObject;
+import sl.visualizevaccinedataservice.bll.blo.GetVaccinesResultObject;
 import sl.visualizevaccinedataservice.dal.VisualizeVaccineDataDataAccess;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,5 +35,11 @@ public class VisualizeVaccineDataBusinessLogic {
         GetVaccinesByTypeResultObject sortedGetVaccinesByTypeResultObject = new GetVaccinesByTypeResultObject();
         sortedGetVaccinesByTypeResultObject.vaccineTypeMap = Arrays.stream(vaccineRecordObjects).collect(Collectors.groupingBy(VaccineRecordObject::getVaccineType, Collectors.mapping(record -> record, Collectors.toList())));
         return sortedGetVaccinesByTypeResultObject;
+    }
+
+    public GetVaccinesResultObject getGetVaccinesResultObject() {
+        GetVaccinesResultObject getVaccinesResultObject = new GetVaccinesResultObject();
+        getVaccinesResultObject.vaccineRecords = visualizeVaccineDataDataAccess.getVaccineRecordObjects();
+        return getVaccinesResultObject;
     }
 }
