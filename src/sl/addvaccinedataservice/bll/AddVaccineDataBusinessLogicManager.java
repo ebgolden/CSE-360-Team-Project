@@ -15,6 +15,13 @@ public class AddVaccineDataBusinessLogicManager {
         if (vaccineDataAttributes.length < 6)
             addVaccineDataObject.missingInformationException = new NullPointerException("Vaccine record 1: All fields must be completed");
         else {
+            for (int vaccineDataAttributesIndex = 0; vaccineDataAttributesIndex < vaccineDataAttributes.length; ++vaccineDataAttributesIndex) {
+                String[] attributeWords = vaccineDataAttributes[vaccineDataAttributesIndex].split(" ");
+                for (int wordIndex = 0; wordIndex < attributeWords.length; ++wordIndex)
+                    if (Character.isLetter(attributeWords[wordIndex].charAt(0)))
+                        attributeWords[wordIndex] = Character.toUpperCase(attributeWords[wordIndex].charAt(0)) + attributeWords[wordIndex].substring(1);
+                vaccineDataAttributes[vaccineDataAttributesIndex] = String.join(" ", attributeWords);
+            }
             try {
                 addVaccineDataObject.id = Integer.parseInt(vaccineDataAttributes[0]);
             } catch (NumberFormatException e) {
