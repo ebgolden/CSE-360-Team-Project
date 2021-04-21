@@ -19,7 +19,7 @@ public class AddVaccineDataBusinessLogicManager {
                 String[] attributeWords = vaccineDataAttributes[vaccineDataAttributesIndex].split(" ");
                 for (int wordIndex = 0; wordIndex < attributeWords.length; ++wordIndex)
                     if (Character.isLetter(attributeWords[wordIndex].charAt(0)))
-                        attributeWords[wordIndex] = Character.toUpperCase(attributeWords[wordIndex].charAt(0)) + attributeWords[wordIndex].substring(1);
+                        attributeWords[wordIndex] = Character.toUpperCase(attributeWords[wordIndex].charAt(0)) + attributeWords[wordIndex].substring(1).toLowerCase();
                 vaccineDataAttributes[vaccineDataAttributesIndex] = String.join(" ", attributeWords);
             }
             try {
